@@ -1,0 +1,1587 @@
+<html>
+
+<head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --red: #D4001A;
+      --dark: #1a1a2e;
+      --card-bg: #ffffff;
+      --bg: #f0f4f8;
+      --text: #2d3748;
+      --muted: #718096;
+      --border: #e2e8f0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 6rem 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 120%, rgba(212, 0, 26, 0.18) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+    }
+
+    .hero-flag {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .hero h1 span {
+      color: #fc8181;
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      opacity: 0.75;
+      letter-spacing: 3px;
+    }
+
+    .hero-badges {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 0.45rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      backdrop-filter: blur(6px);
+    }
+
+    /* MOUNTAIN DECO */
+    .mountain-deco {
+      display: block;
+      width: 100%;
+      height: 60px;
+      background: var(--bg);
+      clip-path: polygon(0 100%, 10% 30%, 20% 60%, 30% 20%, 42% 55%, 55% 10%, 68% 50%, 78% 25%, 90% 55%, 100% 30%, 100% 100%);
+      margin-top: -1px;
+    }
+
+    /* TIMELINE */
+    .timeline-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 3rem;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 4px;
+      background: var(--red);
+      margin: 0.7rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* DAY CARD */
+    .day-card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .day-card::before {
+      content: '';
+      position: absolute;
+      left: 35px;
+      top: 72px;
+      bottom: -2rem;
+      width: 2px;
+      background: linear-gradient(to bottom, #e2e8f0 80%, transparent);
+    }
+
+    .day-card:last-child::before {
+      display: none;
+    }
+
+    .day-number-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1rem;
+      z-index: 1;
+    }
+
+    .day-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      line-height: 1;
+      box-shadow: 0 4px 14px rgba(212, 0, 26, 0.35);
+      flex-shrink: 0;
+    }
+
+    .day-circle .num {
+      font-size: 1.25rem;
+    }
+
+    .day-circle .lbl {
+      font-size: 0.6rem;
+      opacity: 0.85;
+    }
+
+    .day-body {
+      background: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 3px 16px rgba(0, 0, 0, 0.07);
+      border: 1px solid var(--border);
+      margin-left: 1rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .day-body:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.11);
+    }
+
+    /* CARD HEADER BAR */
+    .card-header-bar {
+      padding: 1.1rem 1.4rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .card-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.25;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      padding-top: 2px;
+    }
+
+    .tag {
+      padding: 0.2rem 0.65rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag-train {
+      background: #ebf8ff;
+      color: #2b6cb0;
+    }
+
+    .tag-hike {
+      background: #f0fff4;
+      color: #276749;
+    }
+
+    .tag-drive {
+      background: #fffaf0;
+      color: #c05621;
+    }
+
+    .tag-relax {
+      background: #faf5ff;
+      color: #6b46c1;
+    }
+
+    .tag-hotel {
+      background: #fff5f5;
+      color: #c53030;
+    }
+
+    .tag-city {
+      background: #f7fafc;
+      color: #4a5568;
+    }
+
+    /* LOCATION CHIPS */
+    .location-chips {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      padding: 0.7rem 1.4rem;
+      background: #f7fafc;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .loc-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.78rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ITINERARY */
+    .card-content {
+      padding: 1.1rem 1.4rem 1.3rem;
+    }
+
+    .itinerary-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid #f0f4f8;
+      font-size: 0.88rem;
+    }
+
+    .itinerary-item:last-child {
+      border-bottom: none;
+    }
+
+    .itinerary-time {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 700;
+      min-width: 52px;
+      padding-top: 2px;
+    }
+
+    .itinerary-icon {
+      font-size: 0.95rem;
+      min-width: 18px;
+    }
+
+    .itinerary-text {
+      flex: 1;
+    }
+
+    .itinerary-text strong {
+      color: var(--dark);
+    }
+
+    /* HOTEL */
+    .hotel-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fff5f5;
+      border: 1px solid #fed7d7;
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      margin-top: 0.9rem;
+      font-size: 0.83rem;
+      color: #742a2a;
+    }
+
+    .hotel-info strong {
+      color: #c53030;
+    }
+
+    /* NOTES */
+    .notes-toggle {
+      background: none;
+      border: 1px dashed #cbd5e0;
+      border-radius: 8px;
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      cursor: pointer;
+      margin-top: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .notes-toggle:hover {
+      background: #fffbeb;
+      border-color: #f6e05e;
+      color: #92400e;
+    }
+
+    .notes-box {
+      display: none;
+      margin-top: 0.6rem;
+      background: #fffbeb;
+      border: 1px solid #f6e05e;
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      font-size: 0.83rem;
+    }
+
+    .notes-box.open {
+      display: block;
+    }
+
+    .notes-box ul {
+      padding-left: 1.1rem;
+    }
+
+    .notes-box li {
+      margin-bottom: 0.35rem;
+      color: #744210;
+    }
+
+    .notes-box .note-title {
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      color: rgba(255, 255, 255, 0.55);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: 0.83rem;
+    }
+
+    footer .footer-flag {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    footer p+p {
+      margin-top: 0.4rem;
+      opacity: 0.4;
+      font-size: 0.76rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .day-card {
+        grid-template-columns: 56px 1fr;
+      }
+
+      .day-circle {
+        width: 42px;
+        height: 42px;
+      }
+
+      .day-circle .num {
+        font-size: 1rem;
+      }
+
+      .day-card::before {
+        left: 27px;
+      }
+
+      .card-header-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .card-title {
+        font-size: 1rem;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --red: #D4001A;
+      --dark: #1a1a2e;
+      --bg: #f0f4f8;
+      --text: #2d3748;
+      --muted: #718096;
+      --border: #e2e8f0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .map-section {
+      background: #fff;
+    }
+
+    .map-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.8rem 1.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .map-header h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .map-legend span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Tabs */
+    .day-tabs {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem 0.8rem;
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .day-tab {
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .day-tab:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .day-tab.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    /* Map */
+    .map-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 460px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      background: #e8edf2;
+    }
+
+    .map-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .map-day-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Route info */
+    .map-route-info {
+      margin-top: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .route-stop {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .route-arrow {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .route-mode {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      border: 1px solid var(--border);
+    }
+
+    /* Sleep indicator */
+    .sleep-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #f0fff4;
+      border: 1px solid #9ae6b4;
+      color: #276749;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    @media(max-width:600px) {
+      .map-frame {
+        height: 300px;
+      }
+
+      .map-header {
+        padding: 1.2rem 1rem 0.8rem;
+      }
+
+      .day-tabs {
+        padding: 0 1rem 0.8rem;
+      }
+
+      .map-wrap {
+        padding: 0 1rem 1.5rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+ 
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-flag">🇨🇭</div>
+      <h1>瑞士 <span>12日</span><br>深度之旅</h1>
+      <p class="hero-sub">6 / 17 – 6 / 28 ・ 2025</p>
+      <div class="hero-badges">
+        <span class="badge">🏔️ 阿爾卑斯山</span>
+        <span class="badge">🚂 黃金列車</span>
+        <span class="badge">🚗 自駕湖區</span>
+        <span class="badge">⛰️ 馬特洪峰</span>
+        <span class="badge">🥾 高山健行</span>
+      </div>
+    </div>
+  </section>
+  <div class="mountain-deco"></div>
+ <section class="map-section">
+    <div class="map-header">
+      <h2>🗺️ 每日移動地圖</h2>
+      <div class="map-legend">
+        <span>✈️ 飛機</span>
+        <span>🚂 火車</span>
+        <span>🚗 自駕</span>
+        <span>🚡 纜車</span>
+        <span>🚞 齒軌火車</span>
+      </div>
+    </div>
+
+    <div class="day-tabs" id="dayTabs"></div>
+
+    <div class="map-wrap">
+      <div class="map-frame">
+        <div class="map-day-label" id="mapDayLabel">Day 1 ・ 6/17</div>
+        <iframe id="mapIframe" src="" allowfullscreen loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="map-route-info" id="mapRouteInfo"></div>
+      <div id="sleepInfo"></div>
+    </div>
+  </section>
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <h2 class="section-title">完整行程總覽</h2>
+
+    <!-- DAY 1 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">1</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 17（三）</div>
+            <div class="card-title">抵達蘇黎世</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-train">✈️ 抵達</span>
+            <span class="tag tag-hotel">🏨 機場飯店</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">📍 蘇黎世機場</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">23:00</span>
+            <span class="itinerary-icon">✈️</span>
+            <span class="itinerary-text"><strong>抵達蘇黎世機場</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">深夜</span>
+            <span class="itinerary-icon">🏨</span>
+            <span class="itinerary-text">不進市區，直接前往<strong>機場周邊飯店</strong>休息</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>蘇黎世機場周邊飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>晚到班機不建議硬進市區</li>
+              <li>以「快速入境、洗澡、睡覺」為目標</li>
+              <li>住機場周邊，隔天搭火車前往琉森最省力</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">2</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 18（四）</div>
+            <div class="card-title">蘇黎世 → 琉森</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-train">🚂 火車</span>
+            <span class="tag tag-relax">🌊 輕鬆散步</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">📍 卡貝爾橋</span>
+          <span class="loc-chip">📍 琉森湖畔</span>
+          <span class="loc-chip">📍 舊城區</span>
+          <span class="loc-chip">📍 獅子紀念碑（選配）</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">😴</span>
+            <span class="itinerary-text">睡到自然醒，調整時差</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">午前</span>
+            <span class="itinerary-icon">🚂</span>
+            <span class="itinerary-text">搭火車前往 <strong>Luzern 琉森</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🌉</span>
+            <span class="itinerary-text"><strong>卡貝爾橋</strong>・琉森湖畔・舊城區散步</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">選配</span>
+            <span class="itinerary-icon">🦁</span>
+            <span class="itinerary-text">視精神狀況加遊 <strong>獅子紀念碑</strong></span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>琉森市區飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>這天不要排太滿，重點是調時差</li>
+              <li>琉森適合慢走，不需要特別趕景點</li>
+              <li>若住車站附近，隔天銜接黃金列車精華段更方便</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">3</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 19（五）</div>
+            <div class="card-title">黃金列車精華段 → Interlaken 取車 → Grindelwald</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-train">🚂 黃金列車</span>
+            <span class="tag tag-drive">🚗 自駕開始</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🚂 Luzern–Interlaken Express</span>
+          <span class="loc-chip">📍 Interlaken Ost</span>
+          <span class="loc-chip">📍 Grindelwald</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🚂</span>
+            <span class="itinerary-text">搭乘 <strong>Luzern–Interlaken Express</strong>，欣賞湖泊與山區景色</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">抵達後</span>
+            <span class="itinerary-icon">🚗</span>
+            <span class="itinerary-text">在 <strong>Interlaken Ost</strong> 車站周邊辦理取車</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">中午後</span>
+            <span class="itinerary-icon">🏔️</span>
+            <span class="itinerary-text">開車前往 <strong>Grindelwald</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🛒</span>
+            <span class="itinerary-text">小鎮散步・超市補給・提早休息</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>Grindelwald（連住 2 晚）</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>取車時間不要寫死，建議「抵達後辦理取車」</li>
+              <li>先確認租車公司位置、營業時間</li>
+              <li>確認是否可 Interlaken 取 / Spiez 還，異地還車費用</li>
+              <li>Grindelwald 停車費偏常見，訂房時確認是否含停車</li>
+              <li>這天下午不要再塞景點，保留給 Day 4</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">4</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 20（六）</div>
+            <div class="card-title">First 經典健行</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-hike">🥾 健行</span>
+            <span class="tag tag-drive">🚡 纜車</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🚡 First 纜車站</span>
+          <span class="loc-chip">📍 First Cliff Walk</span>
+          <span class="loc-chip">🏞️ Bachalpsee</span>
+          <span class="loc-chip">📍 Rosenlauischlucht（備案）</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">早上</span>
+            <span class="itinerary-icon">🚡</span>
+            <span class="itinerary-text">搭纜車前往 <strong>First</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🌉</span>
+            <span class="itinerary-text"><strong>First Cliff Walk</strong> 懸崖步道體驗</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🏞️</span>
+            <span class="itinerary-text"><strong>Bachalpsee</strong> 高山湖健行</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🏡</span>
+            <span class="itinerary-text">主方案：回 Grindelwald 放鬆 ／ 備案：Rosenlauischlucht 峽谷</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>Grindelwald</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>First 與 Bachalpsee 是當天主軸，不建議再硬塞</li>
+              <li>高山天氣變化快，前一晚與當天早上查天氣</li>
+              <li>若天氣不好，寧可保守調整</li>
+              <li>必備：防曬・保暖外套・登山鞋・飲水</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">5</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 21（日）</div>
+            <div class="card-title">布里恩茨湖慢遊 → Iseltwald → 圖恩湖</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-drive">🚗 自駕</span>
+            <span class="tag tag-relax">⛵ 遊船</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">📍 Brienz 布里恩茨</span>
+          <span class="loc-chip">⛵ 布里恩茨湖遊船</span>
+          <span class="loc-chip">📍 Iseltwald</span>
+          <span class="loc-chip">📍 圖恩湖畔</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🚗</span>
+            <span class="itinerary-text">從 Grindelwald 出發前往 <strong>Brienz</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">午間</span>
+            <span class="itinerary-icon">🍽️</span>
+            <span class="itinerary-text">湖邊散步、吃午餐</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">⛵</span>
+            <span class="itinerary-text">視船班搭乘 <strong>布里恩茨湖短程遊船</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">📸</span>
+            <span class="itinerary-text">前往 <strong>Iseltwald</strong> 湖岸散步拍照</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">傍晚</span>
+            <span class="itinerary-icon">🏨</span>
+            <span class="itinerary-text">開往<strong>圖恩湖畔飯店</strong>入住</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>圖恩湖畔飯店（連住 2 晚）</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>遊船建議只搭短程，避免車人分離太遠</li>
+              <li>需確認遊船班次・停車位置・搭哪段最順</li>
+              <li>Iseltwald 適合慢走拍照，不需排太多內容</li>
+              <li>傍晚轉往圖恩湖飯店，不要壓太晚到</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">6</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 22（一）</div>
+            <div class="card-title">Blausee 藍湖 → Spiez 慢活</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-relax">🌿 療癒</span>
+            <span class="tag tag-drive">🚗 自駕</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🔵 Blausee 藍湖</span>
+          <span class="loc-chip">⚓ Spiez 港邊</span>
+          <span class="loc-chip">🏰 Spiez 城堡（選配）</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">早上</span>
+            <span class="itinerary-icon">🌊</span>
+            <span class="itinerary-text">開車前往 <strong>Blausee 藍湖</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🌲</span>
+            <span class="itinerary-text">森林步道與湖畔散步，感受療癒氛圍</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">⚓</span>
+            <span class="itinerary-text">前往 <strong>Spiez</strong>，港邊散步・湖景・咖啡廳休息</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">選配</span>
+            <span class="itinerary-icon">🏰</span>
+            <span class="itinerary-text">Spiez 城堡（不強制）</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>圖恩湖畔飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>這天是整趟的重要「節奏平衡日」</li>
+              <li>不建議再加：Thun 城區・更多城堡・額外山區</li>
+              <li>Blausee 雖然不大，重點是小而美、療癒感</li>
+              <li>保持輕鬆，為 Day 7 轉往策馬特保留體力</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 7 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">7</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 23（二）</div>
+            <div class="card-title">Spiez 還車 → 策馬特 → 3100 高山飯店</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-train">🚂 火車</span>
+            <span class="tag tag-hotel">⛰️ 高山住宿</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🚗 Spiez 還車</span>
+          <span class="loc-chip">📍 Zermatt 策馬特</span>
+          <span class="loc-chip">🚞 Gornergrat 齒軌火車</span>
+          <span class="loc-chip">🏨 3100 Kulmhotel</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🚗</span>
+            <span class="itinerary-text">前往 <strong>Spiez</strong> 還車，預留寬鬆時間</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🚂</span>
+            <span class="itinerary-text">搭火車前往 <strong>Zermatt 策馬特</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">抵達後</span>
+            <span class="itinerary-icon">🧳</span>
+            <span class="itinerary-text">大行李存放車站 Locker ／ 鎮上飯店寄放</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">中午</span>
+            <span class="itinerary-icon">🍽️</span>
+            <span class="itinerary-text">鎮上用餐・散步・海拔適應</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🚞</span>
+            <span class="itinerary-text">搭乘 <strong>Gornergrat 齒軌火車</strong>上山</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">晚上</span>
+            <span class="itinerary-icon">🏨</span>
+            <span class="itinerary-text">入住 <strong>3100 Kulmhotel Gornergrat</strong></span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>3100 Kulmhotel Gornergrat</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項（重要）</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 必查事項</div>
+            <ul>
+              <li>Spiez 還車站點是否可行・是否支援異地還車</li>
+              <li>是否可非營業時段還車或自助投遞</li>
+              <li>Zermatt 車站 Locker 尺寸確認</li>
+              <li>若 Locker 不夠，鎮上飯店是否可提前寄放</li>
+              <li>這天重點只是「順利轉場＋上山入住」</li>
+              <li>高海拔住宿可能睡眠品質普通，這很正常</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 8 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">8</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 24（三）</div>
+            <div class="card-title">3100 日出 → 下山回策馬特輕鬆日</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-relax">🌅 日出</span>
+            <span class="tag tag-relax">☕ 輕鬆</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🌅 馬特洪峰日出</span>
+          <span class="loc-chip">📍 策馬特鎮上</span>
+          <span class="loc-chip">🏘️ 防鼠木屋區</span>
+          <span class="loc-chip">🥾 Zmutt（選配）</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">清晨</span>
+            <span class="itinerary-icon">🌅</span>
+            <span class="itinerary-text">依天氣欣賞 <strong>馬特洪峰日出</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">早餐後</span>
+            <span class="itinerary-icon">🚞</span>
+            <span class="itinerary-text">搭火車下山，回策馬特鎮上飯店 Check-in</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🏘️</span>
+            <span class="itinerary-text"><strong>防鼠木屋區</strong>散步・河邊走走・咖啡廳休息</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">選配</span>
+            <span class="itinerary-icon">🥾</span>
+            <span class="itinerary-text">Zmutt 健行（不強制）</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>策馬特鎮上飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>這天不要硬塞高山行程</li>
+              <li>前一晚住 3100，清晨看日出，身體通常會累</li>
+              <li>Day 8 保持放鬆，Day 9 才有機會兼顧冰川天堂＋五湖健行</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 9 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">9</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 25（四）</div>
+            <div class="card-title">冰川天堂 + 五湖健行短版</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-hike">🧊 冰川</span>
+            <span class="tag tag-hike">🏞️ 五湖</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🧊 Glacier Paradise</span>
+          <span class="loc-chip">📍 Sunnegga / Blauherd</span>
+          <span class="loc-chip">🪞 馬特洪峰倒影</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🧊</span>
+            <span class="itinerary-text"><strong>Glacier Paradise 冰川天堂</strong>：高山平台・纜車・冰川景色</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🏞️</span>
+            <span class="itinerary-text"><strong>Sunnegga / Blauherd</strong> 五湖健行短版</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">重點</span>
+            <span class="itinerary-icon">🪞</span>
+            <span class="itinerary-text">馬特洪峰倒影・走 2–3 個重點湖即可</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>策馬特鎮上飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">☁️ 天氣備案</button>
+          <div class="notes-box">
+            <div class="note-title">☁️ 天氣備案</div>
+            <ul>
+              <li>✅ Plan A 天氣佳：冰川天堂 + 五湖短版</li>
+              <li>🌥️ Plan B 下午轉差：冰川天堂 + Sunnegga 輕鬆看景</li>
+              <li>🌤️ Plan C 早普通/下午晴：優先下午五湖短版</li>
+              <li>🌧️ Plan D 天氣差：鎮上散步・博物館・咖啡廳</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 10 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">10</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 26（五）</div>
+            <div class="card-title">策馬特 → Kandersteg 舊線 → 蘇黎世</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-train">🚂 火車</span>
+            <span class="tag tag-city">🏙️ 蘇黎世</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🚂 Via Kandersteg 舊線</span>
+          <span class="loc-chip">📍 Zürich HB</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">上午</span>
+            <span class="itinerary-icon">🚂</span>
+            <span class="itinerary-text">退房後搭火車返回蘇黎世，<strong>Via: Kandersteg 舊線</strong></span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">下午</span>
+            <span class="itinerary-icon">🏙️</span>
+            <span class="itinerary-text">抵達蘇黎世，可散步或採買</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>蘇黎世市區飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>Kandersteg 舊線一定要前一晚實查 SBB</li>
+              <li>不要只記概念，要真的查班次</li>
+              <li>查不到理想班次也不用勉強，安全順利回蘇黎世更重要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 11 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">11</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 27（六）</div>
+            <div class="card-title">蘇黎世自由活動</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-city">🛍️ 採買</span>
+            <span class="tag tag-relax">☕ 自由</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🛍️ 班霍夫大道</span>
+          <span class="loc-chip">🍫 巧克力・紀念品</span>
+          <span class="loc-chip">💦 萊茵瀑布（選配）</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">全天</span>
+            <span class="itinerary-icon">🛍️</span>
+            <span class="itinerary-text"><strong>班霍夫大道</strong>採買：巧克力・紀念品・手錶</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">選配</span>
+            <span class="itinerary-icon">💦</span>
+            <span class="itinerary-text">體力充足可加碼 <strong>Rhine Falls 萊茵瀑布</strong>半日遊</span>
+          </div>
+          <div class="hotel-info">🏨 <strong>住宿：</strong>蘇黎世市區飯店</div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>這天是緩衝日，不要排太滿</li>
+              <li>若前幾天天氣不佳導致行程調整，這天可作為吸收彈性</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 12 -->
+    <div class="day-card">
+      <div class="day-number-col">
+        <div class="day-circle"><span class="num">12</span><span class="lbl">DAY</span></div>
+      </div>
+      <div class="day-body">
+        <div class="card-header-bar">
+          <div>
+            <div class="card-date">6 / 28（日）</div>
+            <div class="card-title">賦歸 🏠</div>
+          </div>
+          <div class="card-tags">
+            <span class="tag tag-train">✈️ 回程</span>
+          </div>
+        </div>
+        <div class="location-chips">
+          <span class="loc-chip">🚂 市區 → 機場</span>
+          <span class="loc-chip">✈️ 13:30 起飛</span>
+        </div>
+        <div class="card-content">
+          <div class="itinerary-item">
+            <span class="itinerary-time">出發前</span>
+            <span class="itinerary-icon">🚂</span>
+            <span class="itinerary-text">從蘇黎世市區搭火車前往機場</span>
+          </div>
+          <div class="itinerary-item">
+            <span class="itinerary-time">13:30</span>
+            <span class="itinerary-icon">✈️</span>
+            <span class="itinerary-text"><strong>班機起飛</strong>，返回台灣</span>
+          </div>
+          <button class="notes-toggle" onclick="toggleNote(this)">⚠️ 注意事項</button>
+          <div class="notes-box">
+            <div class="note-title">⚠️ 注意事項</div>
+            <ul>
+              <li>有托運・退稅・長程航班・機場採買，建議提早出發</li>
+              <li>比起抓剛好，保守一點更安心</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <footer>
+
+    <script>
+      /* 行程原有 JS */
+          function toggleNote(btn) {
+            const label = btn.getAttribute('data-label') || btn.textContent.trim();
+            btn.setAttribute('data-label', label);
+            const box = btn.nextElementSibling;
+            const isOpen = box.classList.toggle('open');
+            btn.textContent = isOpen ? '▲ 收起' : label;
+          }
+      /* ＋ 貼入地圖 JS */
+      const days = [
+        {
+          tab: "D1 抵達",
+          label: "Day 1 ・ 6/17（三）抵達蘇黎世",
+          // 蘇黎世機場 zoom in
+          src: "https://maps.google.com/maps?q=Zurich+Airport,+Switzerland&t=m&z=13&output=embed",
+          route: [
+            { icon: "✈️", name: "台灣出發" },
+            { icon: "✈️", name: "蘇黎世機場 ZRH" }
+          ],
+          mode: "✈️ 長途飛行",
+          sleep: "🏨 住：蘇黎世機場周邊飯店"
+        },
+        {
+          tab: "D2 琉森",
+          label: "Day 2 ・ 6/18（四）蘇黎世 → 琉森",
+          src: "https://maps.google.com/maps?saddr=Zurich+Airport&daddr=Lucerne,+Switzerland&t=m&z=10&output=embed",
+          route: [
+            { icon: "🏨", name: "蘇黎世機場" },
+            { icon: "🚂", name: "火車 ~50min" },
+            { icon: "📍", name: "琉森 Luzern" }
+          ],
+          mode: "🚂 火車",
+          sleep: "🏨 住：琉森市區"
+        },
+        {
+          tab: "D3 黃金列車",
+          label: "Day 3 ・ 6/19（五）黃金列車 → Interlaken → Grindelwald",
+          src: "https://maps.google.com/maps?saddr=Lucerne,+Switzerland&daddr=Interlaken+Ost+Station,+Switzerland+to:Grindelwald,+Switzerland&t=m&z=10&output=embed",
+          route: [
+            { icon: "📍", name: "琉森" },
+            { icon: "🚂", name: "黃金列車" },
+            { icon: "📍", name: "Interlaken Ost" },
+            { icon: "🚗", name: "自駕" },
+            { icon: "📍", name: "Grindelwald" }
+          ],
+          mode: "🚂 黃金列車 + 🚗 自駕",
+          sleep: "🏨 住：Grindelwald（連住2晚）"
+        },
+        {
+          tab: "D4 First健行",
+          label: "Day 4 ・ 6/20（六）First 經典健行",
+          src: "https://maps.google.com/maps?saddr=Grindelwald,+Switzerland&daddr=First,+Grindelwald&t=m&z=13&output=embed",
+          route: [
+            { icon: "📍", name: "Grindelwald" },
+            { icon: "🚡", name: "纜車上山" },
+            { icon: "⛰️", name: "First 2168m" },
+            { icon: "🥾", name: "健行" },
+            { icon: "🏞️", name: "Bachalpsee" }
+          ],
+          mode: "🚡 纜車 + 🥾 健行",
+          sleep: "🏨 住：Grindelwald"
+        },
+        {
+          tab: "D5 布里恩茨",
+          label: "Day 5 ・ 6/21（日）布里恩茨湖 → Iseltwald → 圖恩湖",
+          src: "https://maps.google.com/maps?saddr=Grindelwald,+Switzerland&daddr=Brienz,+Switzerland+to:Iseltwald,+Switzerland+to:Thun,+Switzerland&t=m&z=11&output=embed",
+          route: [
+            { icon: "📍", name: "Grindelwald" },
+            { icon: "🚗", name: "自駕" },
+            { icon: "📍", name: "Brienz" },
+            { icon: "⛵", name: "遊船" },
+            { icon: "📍", name: "Iseltwald" },
+            { icon: "🚗", name: "自駕" },
+            { icon: "📍", name: "圖恩湖畔" }
+          ],
+          mode: "🚗 自駕全日",
+          sleep: "🏨 住：圖恩湖畔（連住2晚）"
+        },
+        {
+          tab: "D6 藍湖",
+          label: "Day 6 ・ 6/22（一）Blausee 藍湖 → Spiez",
+          src: "https://maps.google.com/maps?saddr=Thun,+Switzerland&daddr=Blausee,+Kandergrund,+Switzerland+to:Spiez,+Switzerland&t=m&z=11&output=embed",
+          route: [
+            { icon: "📍", name: "圖恩湖畔" },
+            { icon: "🚗", name: "自駕" },
+            { icon: "🔵", name: "Blausee 藍湖" },
+            { icon: "🚗", name: "自駕" },
+            { icon: "⚓", name: "Spiez" }
+          ],
+          mode: "🚗 自駕",
+          sleep: "🏨 住：圖恩湖畔"
+        },
+        {
+          tab: "D7 策馬特",
+          label: "Day 7 ・ 6/23（二）Spiez 還車 → 策馬特 → 3100m",
+          src: "https://maps.google.com/maps?saddr=Spiez,+Switzerland&daddr=Zermatt,+Switzerland+to:Gornergrat,+Zermatt&t=m&z=10&output=embed",
+          route: [
+            { icon: "🚗", name: "Spiez 還車" },
+            { icon: "🚂", name: "火車轉乘" },
+            { icon: "📍", name: "Zermatt" },
+            { icon: "🚞", name: "齒軌火車" },
+            { icon: "🏨", name: "3100 Kulmhotel" }
+          ],
+          mode: "🚂 火車 + 🚞 齒軌火車",
+          sleep: "🏨 住：3100 Kulmhotel Gornergrat"
+        },
+        {
+          tab: "D8 日出",
+          label: "Day 8 ・ 6/24（三）馬特洪峰日出 → 下山策馬特",
+          src: "https://maps.google.com/maps?saddr=Gornergrat,+Zermatt&daddr=Zermatt,+Switzerland&t=m&z=13&output=embed",
+          route: [
+            { icon: "🌅", name: "Gornergrat 日出" },
+            { icon: "🚞", name: "齒軌火車下山" },
+            { icon: "📍", name: "Zermatt 鎮上" },
+            { icon: "🏘️", name: "防鼠木屋區散步" }
+          ],
+          mode: "🚞 齒軌火車下山",
+          sleep: "🏨 住：策馬特鎮上"
+        },
+        {
+          tab: "D9 冰川",
+          label: "Day 9 ・ 6/25（四）冰川天堂 + 五湖健行",
+          src: "https://maps.google.com/maps?saddr=Zermatt,+Switzerland&daddr=Glacier+Paradise,+Zermatt+to:Sunnegga,+Zermatt&t=m&z=13&output=embed",
+          route: [
+            { icon: "📍", name: "Zermatt" },
+            { icon: "🚡", name: "纜車" },
+            { icon: "🧊", name: "Glacier Paradise" },
+            { icon: "🚡", name: "纜車" },
+            { icon: "🏞️", name: "Sunnegga 五湖" }
+          ],
+          mode: "🚡 纜車 + 🥾 健行",
+          sleep: "🏨 住：策馬特鎮上"
+        },
+        {
+          tab: "D10 蘇黎世",
+          label: "Day 10 ・ 6/26（五）策馬特 → Kandersteg → 蘇黎世",
+          src: "https://maps.google.com/maps?saddr=Zermatt,+Switzerland&daddr=Kandersteg,+Switzerland+to:Zurich,+Switzerland&t=m&z=9&output=embed",
+          route: [
+            { icon: "📍", name: "Zermatt" },
+            { icon: "🚂", name: "火車" },
+            { icon: "🚂", name: "Kandersteg 舊線" },
+            { icon: "📍", name: "Zürich HB" }
+          ],
+          mode: "🚂 火車全程",
+          sleep: "🏨 住：蘇黎世市區"
+        },
+        {
+          tab: "D11 自由日",
+          label: "Day 11 ・ 6/27（六）蘇黎世自由活動",
+          src: "https://maps.google.com/maps?saddr=Zurich+HB,+Switzerland&daddr=Bahnhofstrasse,+Zurich+to:Rhine+Falls,+Neuhausen+am+Rheinfall&t=m&z=11&output=embed",
+          route: [
+            { icon: "📍", name: "蘇黎世市區" },
+            { icon: "🛍️", name: "班霍夫大道" },
+            { icon: "💦", name: "萊茵瀑布（選配）" }
+          ],
+          mode: "🚶 步行 / 🚂 火車",
+          sleep: "🏨 住：蘇黎世市區"
+        },
+        {
+          tab: "D12 賦歸",
+          label: "Day 12 ・ 6/28（日）賦歸",
+          src: "https://maps.google.com/maps?saddr=Zurich+HB,+Switzerland&daddr=Zurich+Airport,+Switzerland&t=m&z=12&output=embed",
+          route: [
+            { icon: "📍", name: "蘇黎世市區" },
+            { icon: "🚂", name: "火車" },
+            { icon: "✈️", name: "蘇黎世機場 ZRH" },
+            { icon: "✈️", name: "13:30 起飛" }
+          ],
+          mode: "🚂 火車 + ✈️ 飛機",
+          sleep: "✈️ 返回台灣"
+        }
+      ];
+
+      let current = 0;
+
+      function buildTabs() {
+        const container = document.getElementById('dayTabs');
+        days.forEach((d, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'day-tab' + (i === 0 ? ' active' : '');
+          btn.textContent = d.tab;
+          btn.onclick = () => switchDay(i);
+          container.appendChild(btn);
+        });
+      }
+
+      function switchDay(idx) {
+        current = idx;
+        const d = days[idx];
+
+        // update tabs
+        document.querySelectorAll('.day-tab').forEach((t, i) => {
+          t.classList.toggle('active', i === idx);
+        });
+
+        // update label
+        document.getElementById('mapDayLabel').textContent = d.label;
+
+        // update iframe
+        document.getElementById('mapIframe').src = d.src;
+
+        // update route
+        const routeEl = document.getElementById('mapRouteInfo');
+        routeEl.innerHTML = '';
+        d.route.forEach((stop, i) => {
+          const chip = document.createElement('span');
+          chip.className = 'route-stop';
+          chip.textContent = stop.icon + ' ' + stop.name;
+          routeEl.appendChild(chip);
+          if (i < d.route.length - 1) {
+            const arr = document.createElement('span');
+            arr.className = 'route-arrow';
+            arr.textContent = '→';
+            routeEl.appendChild(arr);
+          }
+        });
+        const modeEl = document.createElement('span');
+        modeEl.className = 'route-mode';
+        modeEl.textContent = d.mode;
+        routeEl.appendChild(modeEl);
+
+        // sleep
+        document.getElementById('sleepInfo').innerHTML =
+          `<div class="sleep-badge">${d.sleep}</div>`;
+      }
+
+      buildTabs();
+      switchDay(0);
+    </script>
+</body>
+
+</html>
